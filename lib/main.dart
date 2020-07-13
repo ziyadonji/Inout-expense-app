@@ -46,26 +46,55 @@ class Home extends StatelessWidget {
           ),
           width: double.infinity,
           height: 150,
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.all(10),
         ),
         Column(
-          children:transaction.map((e) {
-            return Card(
-              child: Row(
-                children:[
-                  Container(
-                    child: Text(e.cost.toString()),
+            children: transaction.map((e) {
+          return Card(
+            margin: EdgeInsets.symmetric(horizontal: 15,
+            vertical: 5,),
+            child: Row(children: [
+              Container(
+                width: 85,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.deepPurple[500],
+                    width: 2,
                   ),
-                  Column(children: <Widget>[
-                    Text(e.title),
-                    Text(e.date.toString()),
-                  ],)
-                ]
+                ),
+                child: Text(
+                  
+                  e.cost.toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.deepPurple[600],
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            );
-
-          }).toList()
-        )
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    e.title,
+                    style: TextStyle(fontSize: 23,
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.black),
+                  ),
+                  SizedBox(height: 10,),
+                  Text(e.date.toString(),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color:Colors.grey,
+                  ),),
+                ],
+              )
+            ]),
+          );
+        }).toList())
       ]),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './transaction.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final List<Transaction> transaction = [
     Transaction(
       cost: 100,
@@ -48,25 +54,56 @@ class Home extends StatelessWidget {
           height: 150,
           margin: EdgeInsets.all(10),
         ),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          child: Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextField(
+                    decoration: InputDecoration(hintText: "title"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "cost"),
+                  ),
+                  FlatButton(
+                    onPressed: (){
+                      setState(() {
+                        transaction.insert(0, Transaction(cost: 5, date: DateTime.now(), id: "3", title: "new"),);
+                        
+                      });
+                      
+                    },
+                    child: Text('Add transaction',style: TextStyle(color: Colors.deepPurple[700]),),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         Column(
             children: transaction.map((e) {
           return Card(
-            margin: EdgeInsets.symmetric(horizontal: 15,
-            vertical: 5,),
+            margin: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 5,
+            ),
             child: Row(children: [
               Container(
                 width: 85,
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.elliptical(7, 7)),
                   border: Border.all(
                     color: Colors.deepPurple[500],
                     width: 2,
                   ),
                 ),
                 child: Text(
-                  
-                  e.cost.toString(),
+                  '${e.cost} Rs',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.deepPurple[600],
@@ -80,16 +117,21 @@ class Home extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     e.title,
-                    style: TextStyle(fontSize: 23,
-                    //fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                    style: TextStyle(
+                        fontSize: 23,
+                        //fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
-                  SizedBox(height: 10,),
-                  Text(e.date.toString(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color:Colors.grey,
-                  ),),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    DateFormat.yMd().format(e.date),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ],
               )
             ]),

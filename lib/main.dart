@@ -31,20 +31,17 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.deepPurple[700],
       ),
       body: ListView(
-        physics: AlwaysScrollableScrollPhysics(),
-        children: [
-          Column(children: [
-            Container(
-              child: Card(
-                child: Center(child: Text("here is chart")),
-              ),
-              width: double.infinity,
-              height: 150,
-              margin: EdgeInsets.all(10),
+              children:[ Column(children: [
+          Container(
+            child: Card(
+              child: Center(child: Text("here is chart")),
             ),
-            UserTransaction(),
-          ]),
-        ],
+            width: double.infinity,
+            height: 150,
+            margin: EdgeInsets.all(10),
+          ),
+          UserTransaction(),
+        ]),],
       ),
     );
   }

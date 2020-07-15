@@ -5,10 +5,22 @@ import './transaction_list.dart';
 
 class UserTransaction extends StatefulWidget {
   @override
-  _YserTransactionState createState() => _YserTransactionState();
+  _UserTransactionState createState() => _UserTransactionState();
 }
 
-class _YserTransactionState extends State<UserTransaction> {
+class _UserTransactionState extends State<UserTransaction> {
+  var id='srt';
+  void addTransaction( costt,tittle){
+    
+    
+    setState(() {
+      _transaction.insert(0, Transaction(cost: costt, date:DateTime.now(), id:DateTime.now().toString() , title: tittle));
+      
+    });
+
+  }
+
+
   final List<Transaction> _transaction = [
     Transaction(
       cost: 100,
@@ -24,11 +36,16 @@ class _YserTransactionState extends State<UserTransaction> {
     ),
   ];
 
+  
+
   @override
   Widget build(BuildContext context) {
+    
+
     return Column(
       children: <Widget>[
-        NewTransaction(),
+        Container(
+          height :150,child: SingleChildScrollView(child: NewTransaction(addTransaction))),
         TransactionList(_transaction),
       ],
     );

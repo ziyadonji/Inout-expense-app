@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 
 class Transaction {
-  final int cost;
+  final double cost;
   final String title;
   final String id;
   final DateTime date;

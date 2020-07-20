@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
@@ -10,7 +11,13 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 310,
-      child: ListView.builder(
+      child: _transaction.isEmpty?Column(
+        children:[Text("No Transactions yet..!!",),
+        
+        SizedBox(height:20)
+          ,Container(height:200,child: Image.asset("assets/images/waiting.png",fit: BoxFit.cover,)),
+        ],
+      ):ListView.builder(
         itemCount: _transaction.length,
         physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, index) {
@@ -35,7 +42,7 @@ class TransactionList extends StatelessWidget {
                   '${_transaction[index].cost.toStringAsFixed(0)} Rs',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.deepPurple[600],
+                    color: Theme.of(context).primaryColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),

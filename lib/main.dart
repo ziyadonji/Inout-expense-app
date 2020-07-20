@@ -12,7 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "INOUT",
-      theme: ThemeData(primarySwatch: Colors.deepPurple,
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+        accentColor: Colors.amberAccent,
       ),
       debugShowCheckedModeBanner: false,
       home: Home(),
@@ -51,18 +53,18 @@ class _HomeState extends State<Home> {
   }
 
   final List<Transaction> _transaction = [
-    Transaction(
-      cost: 100,
-      date: DateTime.now(),
-      id: "1",
-      title: "petrol",
-    ),
-    Transaction(
-      cost: 50,
-      date: DateTime.now(),
-      id: "2",
-      title: "book",
-    ),
+    // Transaction(
+    //   cost: 100,
+    //   date: DateTime.now(),
+    //   id: "1",
+    //   title: "petrol",
+    // ),
+    // Transaction(
+    //   cost: 50,
+    //   date: DateTime.now(),
+    //   id: "2",
+    //   title: "book",
+    // ),
   ];
 
   @override
@@ -78,7 +80,7 @@ class _HomeState extends State<Home> {
         ],
         title: Text('InOut'),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple[700],
+        backgroundColor:Theme.of(context).primaryColorDark ,
       ),
       body: ListView(
         children: [
@@ -101,7 +103,7 @@ class _HomeState extends State<Home> {
           _startAddNewTransaction(context);
         },
         child: Icon(Icons.add),
-        backgroundColor: Colors.purple[700],
+        
       ),
     );
   }

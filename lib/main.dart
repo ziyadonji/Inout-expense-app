@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
       body: ListView(
         children: [
           Column(children: [
-            Chart(),
+            Chart(_transaction),
             TransactionList(_transaction),
           ]),
         ],

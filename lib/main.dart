@@ -2,6 +2,7 @@ import 'package:Inout/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 import './models/transaction.dart';
 import './widgets/new_transaction.dart';
+import './widgets/chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.amberAccent,
+        fontFamily: 'Gruppo',
+        textTheme: TextTheme(
+          headline6: TextStyle(
+              fontSize: 20,
+              letterSpacing: 1,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Gruppo'),
+        ),
+        appBarTheme: AppBarTheme(
+          textTheme: TextTheme(
+            headline6: TextStyle(
+                fontSize: 25,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Gruppo'),
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: Home(),
@@ -80,19 +98,12 @@ class _HomeState extends State<Home> {
         ],
         title: Text('InOut'),
         centerTitle: true,
-        backgroundColor:Theme.of(context).primaryColorDark ,
+        backgroundColor: Theme.of(context).primaryColorDark,
       ),
       body: ListView(
         children: [
           Column(children: [
-            Container(
-              child: Card(
-                child: Center(child: Text("here is chart")),
-              ),
-              width: double.infinity,
-              height: 150,
-              margin: EdgeInsets.all(10),
-            ),
+            Chart(),
             TransactionList(_transaction),
           ]),
         ],
@@ -103,7 +114,6 @@ class _HomeState extends State<Home> {
           _startAddNewTransaction(context);
         },
         child: Icon(Icons.add),
-        
       ),
     );
   }

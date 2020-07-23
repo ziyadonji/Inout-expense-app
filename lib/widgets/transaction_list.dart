@@ -12,7 +12,7 @@ class TransactionList extends StatelessWidget {
     return Container(
       height: 310,
       child: _transaction.isEmpty?Column(
-        children:[Text("No Transactions yet..!!",),
+        children:[Text("No Transactions yet..!!",style: Theme.of(context).textTheme.headline6,),
         
         SizedBox(height:20)
           ,Container(height:200,child: Image.asset("assets/images/waiting.png",fit: BoxFit.cover,)),
@@ -53,11 +53,7 @@ class TransactionList extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     _transaction[index].title,
-                    style: TextStyle(
-                        fontSize: 23,
-                        //fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+                    style: Theme.of(context).textTheme.headline6),
                   SizedBox(
                     height: 10,
                   ),

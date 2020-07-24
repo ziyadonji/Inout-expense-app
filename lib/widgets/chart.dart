@@ -28,21 +28,38 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get totalSum{
+    double totalSum=0;
+    for (var i in groupedTransactionValue){
+     totalSum+= i.amount;
+
+    }
+    
+    return totalSum;
+  }
+
   @override
   Widget build(BuildContext context) {
     print(groupedTransactionValue);
     return Card(
       margin: EdgeInsets.fromLTRB(15, 12, 15, 5),
       elevation: 6,
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-        ...groupedTransactionValue.map((e) {
-          return 
-          ChartBar(amountPcntTotal:.5 ,label: e.day,totalAmountSpent: double.parse(e.amount.toString()));
-          
-          
-        })
-      ]),
+      child: Container(
+        padding: EdgeInsets.all(5),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+          ...groupedTransactionValue.map((e) {
+            return 
+            Flexible(
+              fit: FlexFit.tight,
+                        child: ChartBar(amountPcntTotal:
+               (totalSum==0)?0.0001:double.parse(e.amount.toString())/ totalSum,label: e.day,totalAmountSpent: double.parse(e.amount.toString())),
+            );
+            
+            
+          })
+        ]),
+      ),
     );
   }
 }

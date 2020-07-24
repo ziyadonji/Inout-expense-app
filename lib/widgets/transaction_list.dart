@@ -38,13 +38,15 @@ class TransactionList extends StatelessWidget {
                     width: 2,
                   ),
                 ),
-                child: Text(
-                  '${_transaction[index].cost.toStringAsFixed(0)} Rs',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                child: FittedBox(
+                                  child: Text(
+                    '${_transaction[index].cost.toStringAsFixed(0)} Rs',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

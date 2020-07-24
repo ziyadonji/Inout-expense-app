@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  final List<Transaction> _transaction = [
+   final  List<Transaction> _transaction = [
     // Transaction(
     //   cost: 100,
     //   date: DateTime.now(),
@@ -84,7 +84,14 @@ class _HomeState extends State<Home> {
     //   title: "book",
     // ),
   ];
+  
+   List<Transaction> get _recentTransactions{
+     return _transaction.where((element){
+      return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
 
+     }).toList();
+
+   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +110,7 @@ class _HomeState extends State<Home> {
       body: ListView(
         children: [
           Column(children: [
-            Chart(_transaction),
+            Chart(_recentTransactions),
             TransactionList(_transaction),
           ]),
         ],

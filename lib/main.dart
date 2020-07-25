@@ -17,7 +17,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.amberAccent,
         fontFamily: 'Gruppo',
-        textTheme: TextTheme(
+        textTheme: ThemeData.light().textTheme.copyWith(
+          button: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
           headline6: TextStyle(
               fontSize: 20,
               letterSpacing: 1,
@@ -69,6 +73,9 @@ class _HomeState extends State<Home> {
       },
     );
   }
+    
+
+
 
    final  List<Transaction> _transaction = [
     // Transaction(

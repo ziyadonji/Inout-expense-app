@@ -21,7 +21,34 @@ class TransactionList extends StatelessWidget {
         itemCount: _transaction.length,
         physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          return Card(
+          return
+          //  Padding(
+          //    padding: const EdgeInsets.symmetric(horizontal: 10),
+          //    child: Card(
+               
+          //      elevation: 4,
+          //                 child: ListTile(
+          //        title: Text( _transaction[index].title,style: Theme.of(context).textTheme.headline6),
+          //        subtitle: Text(DateFormat.yMMMd().format(_transaction[index].date),
+          //                style: TextStyle(
+          //                 fontSize: 14,
+          //                ),),
+          //        leading: CircleAvatar(
+          //          radius: 30,
+          //          child:Padding(
+          //            padding: const EdgeInsets.symmetric( horizontal: 6),
+          //            child: FittedBox(child: Text('${_transaction[index].cost.toStringAsFixed(0)} Rs')),
+          //          )
+          //        ),
+
+
+          //      ),
+          //    ),
+          //  );
+          
+          
+           Card(
+            elevation: 5,
             margin: EdgeInsets.symmetric(
               horizontal: 15,
               vertical: 5,
@@ -38,14 +65,17 @@ class TransactionList extends StatelessWidget {
                     width: 2,
                   ),
                 ),
-                child: FittedBox(
-                                  child: Text(
-                    '${_transaction[index].cost.toStringAsFixed(0)} Rs',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                child: Container(
+                  height: 20,
+                  child: FittedBox(
+                                    child: Text(
+                      '${_transaction[index].cost.toStringAsFixed(0)} Rs',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -60,7 +90,7 @@ class TransactionList extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    DateFormat.yMd().format(_transaction[index].date),
+                    DateFormat.yMMMd().format(_transaction[index].date),
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,

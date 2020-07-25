@@ -25,7 +25,7 @@ class Chart extends StatelessWidget {
       print(DateFormat.E().format(weakDay));
       return Bar(DateFormat.E().format(weakDay),double.parse(amount.toStringAsFixed(0)));
       
-    });
+    }).reversed.toList();
   }
 
   double get totalSum{

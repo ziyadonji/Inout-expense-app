@@ -11,30 +11,28 @@ class Chart extends StatelessWidget {
 
   List<Bar> get groupedTransactionValue {
     return List.generate(7, (index) {
-      var weakDay=DateTime.now().subtract(Duration(days: index));
-      double amount=0;
-      for(var i=0;i<recentTransaction.length;i++){
-        if (weakDay.day==recentTransaction[i].date.day&&
-            weakDay.hour==recentTransaction[i].date.hour&&
-            weakDay.year==recentTransaction[i].date.year){
-               amount+=recentTransaction[i].cost;
-            }
-            
+      var weakDay = DateTime.now().subtract(Duration(days: index));
+      double amount = 0;
+      for (var i = 0; i < recentTransaction.length; i++) {
+        if (weakDay.day == recentTransaction[i].date.day &&
+            weakDay.month == recentTransaction[i].date.month &&
+            weakDay.year == recentTransaction[i].date.year) {
+          amount += recentTransaction[i].cost;
+        }
       }
       print(amount);
       print(DateFormat.E().format(weakDay));
-      return Bar(DateFormat.E().format(weakDay),double.parse(amount.toStringAsFixed(0)));
-      
+      return Bar(DateFormat.E().format(weakDay),
+          double.parse(amount.toStringAsFixed(0)));
     }).reversed.toList();
   }
 
-  double get totalSum{
-    double totalSum=0;
-    for (var i in groupedTransactionValue){
-     totalSum+= i.amount;
-
+  double get totalSum {
+    double totalSum = 0;
+    for (var i in groupedTransactionValue) {
+      totalSum += i.amount;
     }
-    
+
     return totalSum;
   }
 
@@ -46,17 +44,17 @@ class Chart extends StatelessWidget {
       elevation: 6,
       child: Container(
         padding: EdgeInsets.all(5),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           ...groupedTransactionValue.map((e) {
-            return 
-            Flexible(
+            return Flexible(
               fit: FlexFit.tight,
-                        child: ChartBar(amountPcntTotal:
-               (totalSum==0)?0.0001:double.parse(e.amount.toString())/ totalSum,label: e.day,totalAmountSpent: double.parse(e.amount.toString())),
+              child: ChartBar(
+                  amountPcntTotal: (totalSum == 0)
+                      ? 0.0001
+                      : double.parse(e.amount.toString()) / totalSum,
+                  label: e.day,
+                  totalAmountSpent: double.parse(e.amount.toString())),
             );
-            
-            
           })
         ]),
       ),

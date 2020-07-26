@@ -34,10 +34,11 @@ class _NewTransactionState extends State<NewTransaction> {
     final titleEntered = title.text;
     final amountEntered = double.parse(amount.text);
 
-    if (titleEntered.isEmpty || amountEntered <= -1) {
+    if (titleEntered.isEmpty || amountEntered <= -1||selectedDate==null) {
       return;
     }
-    widget.addTransaction(amountEntered, titleEntered);
+
+    widget.addTransaction(amountEntered, titleEntered,selectedDate);
     Navigator.of(context).pop();
   }
 
@@ -75,9 +76,8 @@ class _NewTransactionState extends State<NewTransaction> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Text('selected date',style:TextStyle(fontSize: 12,color: Colors.grey)),
-                      SizedBox(height: 5,),
-                      Text( (selectedDate==null?"No date Chosen":DateFormat.yMd().format(selectedDate)),style: TextStyle(fontSize: 18),),
+                     
+                      Text( (selectedDate==null?"No date Chosen":DateFormat.yMd().format(selectedDate)),style: TextStyle(fontSize: 15,color: Colors.grey),),
                     ],
                   ),
                   

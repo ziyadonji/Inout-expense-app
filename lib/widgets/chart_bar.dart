@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ChartBar extends StatelessWidget {
+class ChartBar extends StatefulWidget {
   final String label;
   final double totalAmountSpent;
   final double amountPcntTotal;
@@ -8,13 +8,18 @@ class ChartBar extends StatelessWidget {
   ChartBar({this.amountPcntTotal, this.label, this.totalAmountSpent});
 
   @override
+  _ChartBarState createState() => _ChartBarState();
+}
+
+class _ChartBarState extends State<ChartBar> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         SizedBox(height: 5),
          Container(
            height: 20,
-           child: FittedBox(child: Text(totalAmountSpent.toString()))),
+           child: FittedBox(child: Text(widget.totalAmountSpent.toString()))),
         SizedBox(height: 2),
         Container(
           height: 100,
@@ -33,7 +38,7 @@ class ChartBar extends StatelessWidget {
                 
               ),
                FractionallySizedBox(
-                heightFactor: amountPcntTotal,
+                heightFactor: widget.amountPcntTotal,
                 child: Container(
                   width: 10,
                   decoration: BoxDecoration(
@@ -47,7 +52,7 @@ class ChartBar extends StatelessWidget {
           ),
         ),
         SizedBox(height: 2),
-        Text(label),
+        Text(widget.label),
         SizedBox(height: 5),
       ],
     );

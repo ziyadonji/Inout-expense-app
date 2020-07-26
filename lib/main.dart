@@ -57,15 +57,23 @@ class _HomeState extends State<Home> {
           return NewTransaction(_addTransaction);
         });
   }
+  void removeItem(index){
+    setState(() {
+      _transaction.removeWhere((element) => element.id==index);
+    });
+     
 
-  void _addTransaction(costt, tittle) {
+  }
+
+
+  void _addTransaction(costt, tittle,DateTime chosedDate) {
     setState(
       () {
         _transaction.insert(
           0,
           Transaction(
             cost: costt,
-            date: DateTime.now(),
+            date: chosedDate,
             id: DateTime.now().toString(),
             title: tittle,
           ),
@@ -119,7 +127,7 @@ class _HomeState extends State<Home> {
         children: [
           Column(children: [
             Chart(_recentTransactions),
-            TransactionList(_transaction),
+            TransactionList(_transaction,removeItem),
           ]),
         ],
       ),

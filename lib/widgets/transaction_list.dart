@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,8 @@ class _TransactionListState extends State<TransactionList> {
     return Container(
       height: 460,
       child: widget._transaction.isEmpty
-          ? Column(
+          ?LayoutBuilder(builder: (ctx,constraints){
+            return Column(
               children: [
                 Text(
                   "No Transactions yet..!!",
@@ -28,13 +30,15 @@ class _TransactionListState extends State<TransactionList> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                    height: 200,
+                    height: constraints.maxHeight * .7,
                     child: Image.asset(
                       "assets/images/waiting.png",
                       fit: BoxFit.cover,
                     )),
               ],
-            )
+            );
+          }) 
+          
           : ListView.builder(
               itemCount: widget._transaction.length,
               physics: AlwaysScrollableScrollPhysics(),

@@ -1,10 +1,16 @@
 import 'package:Inout/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 import './models/transaction.dart';
 import './widgets/new_transaction.dart';
 import './widgets/chart.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitDown,
+  //   DeviceOrientation.portraitUp,
+  // ]);
   runApp(MyApp());
 }
 
@@ -18,16 +24,14 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amberAccent,
         fontFamily: 'Gruppo',
         textTheme: ThemeData.light().textTheme.copyWith(
-          button: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white
-          ),
-          headline6: TextStyle(
-              fontSize: 20,
-              letterSpacing: 1,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Gruppo'),
-        ),
+              button:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              headline6: TextStyle(
+                  fontSize: 20,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Gruppo'),
+            ),
         appBarTheme: AppBarTheme(
           textTheme: TextTheme(
             headline6: TextStyle(
@@ -57,16 +61,14 @@ class _HomeState extends State<Home> {
           return NewTransaction(_addTransaction);
         });
   }
-  void removeItem(index){
-    setState(() {
-      _transaction.removeWhere((element) => element.id==index);
-    });
-     
 
+  void removeItem(index) {
+    setState(() {
+      _transaction.removeWhere((element) => element.id == index);
+    });
   }
 
-
-  void _addTransaction(costt, tittle,DateTime chosedDate) {
+  void _addTransaction(costt, tittle, DateTime chosedDate) {
     setState(
       () {
         _transaction.insert(
@@ -81,11 +83,8 @@ class _HomeState extends State<Home> {
       },
     );
   }
-    
 
-
-
-   final  List<Transaction> _transaction = [
+  final List<Transaction> _transaction = [
     // Transaction(
     //   cost: 100,
     //   date: DateTime.now(),
@@ -99,35 +98,74 @@ class _HomeState extends State<Home> {
     //   title: "book",
     // ),
   ];
-  
-   List<Transaction> get _recentTransactions{
-     return _transaction.where((element){
+  bool _showChart =false;
+  List<Transaction> get _recentTransactions {
+    return _transaction.where((element) {
       return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+  
 
-     }).toList();
-
-   }
-   
   @override
   Widget build(BuildContext context) {
+    
+    final isLandScape= MediaQuery.of(context).orientation==Orientation.landscape;
+    final appBar = AppBar(
+      actions: <Widget>[
+        IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              _startAddNewTransaction(context);
+            })
+      ],
+      title: Text('InOut'),
+      centerTitle: true,
+      backgroundColor: Theme.of(context).primaryColorDark,
+    );
+    final txList=Container(
+              child: TransactionList(_transaction, removeItem),
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      appBar.preferredSize.height) *
+                  0.7,
+            );
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                _startAddNewTransaction(context);
-              })
-        ],
-        title: Text('InOut'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColorDark,
-      ),
+      appBar: appBar,
       body: ListView(
         children: [
           Column(children: [
-            Chart(_recentTransactions),
-            TransactionList(_transaction,removeItem),
+            if(isLandScape)
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                
+                Text('show chart',),
+                Switch(value: _showChart, onChanged: (newValue){
+                  setState(() {
+                    _showChart=newValue;
+                  });
+                })
+              ],
+            ),
+            if(isLandScape)_showChart?
+            Container(
+              child: Chart(
+                _recentTransactions,
+              ),
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      appBar.preferredSize.height) *
+                  0.7,
+            ):txList,
+            if(!isLandScape) Container(
+              child: Chart(
+                _recentTransactions,
+              ),
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      appBar.preferredSize.height) *
+                  0.3,
+            ),
+            if(!isLandScape)txList
           ]),
         ],
       ),

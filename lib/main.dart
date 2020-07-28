@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:Inout/widgets/transaction_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import './models/transaction.dart';
@@ -98,19 +101,30 @@ class _HomeState extends State<Home> {
     //   title: "book",
     // ),
   ];
-  bool _showChart =false;
+  bool _showChart = false;
   List<Transaction> get _recentTransactions {
     return _transaction.where((element) {
       return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
   }
-  
 
   @override
   Widget build(BuildContext context) {
-    
-    final isLandScape= MediaQuery.of(context).orientation==Orientation.landscape;
-    final appBar = AppBar(
+    final isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = Platform.isIOS? CupertinoNavigationBar(
+      middle:  Text('InOut'),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+        GestureDetector(
+          onTap:() {
+              _startAddNewTransaction(context);
+            },
+            child: Icon(CupertinoIcons.add),
+        )
+      ],),
+    ): AppBar(
       actions: <Widget>[
         IconButton(
             icon: Icon(Icons.add),
@@ -122,60 +136,78 @@ class _HomeState extends State<Home> {
       centerTitle: true,
       backgroundColor: Theme.of(context).primaryColorDark,
     );
-    final txList=Container(
-              child: TransactionList(_transaction, removeItem),
-              height: (MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
-                      appBar.preferredSize.height) *
-                  0.7,
-            );
-    return Scaffold(
-      appBar: appBar,
-      body: ListView(
+    final txList = Container(
+      child: TransactionList(_transaction, removeItem),
+      height: (MediaQuery.of(context).size.height -
+              MediaQuery.of(context).padding.top -
+              appBar.preferredSize.height) *
+          0.7,
+    );
+    final body=SafeArea(child:ListView(
         children: [
           Column(children: [
-            if(isLandScape)
-            Row(mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                
-                Text('show chart',),
-                Switch(value: _showChart, onChanged: (newValue){
-                  setState(() {
-                    _showChart=newValue;
-                  });
-                })
-              ],
-            ),
-            if(isLandScape)_showChart?
-            Container(
-              child: Chart(
-                _recentTransactions,
+            if (isLandScape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'show chart',style: Theme.of(context).textTheme.headline6,
+                  ),
+
+                  //adaptive is use for adapting into ios or android based on platform
+
+                  Switch.adaptive(
+                      value: _showChart,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _showChart = newValue;
+                        });
+                      })
+                ],
               ),
-              height: (MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
-                      appBar.preferredSize.height) *
-                  0.7,
-            ):txList,
-            if(!isLandScape) Container(
-              child: Chart(
-                _recentTransactions,
+            if (isLandScape)
+              _showChart
+                  ? Container(
+                      child: Chart(
+                        _recentTransactions,
+                      ),
+                      height: (MediaQuery.of(context).size.height -
+                              MediaQuery.of(context).padding.top -
+                              appBar.preferredSize.height) *
+                          0.7,
+                    )
+                  : txList,
+            if (!isLandScape)
+              Container(
+                child: Chart(
+                  _recentTransactions,
+                ),
+                height: (MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.top -
+                        appBar.preferredSize.height) *
+                    0.3,
               ),
-              height: (MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
-                      appBar.preferredSize.height) *
-                  0.3,
-            ),
-            if(!isLandScape)txList
+            if (!isLandScape) txList
           ]),
         ],
-      ),
+      ),);
+    return  Platform.isIOS?CupertinoPageScaffold(child: body,
+    navigationBar:appBar
+    )
+    :Scaffold(
+      appBar: appBar,
+      body: body,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
+
+      //import dart.io and can use platform. to check for the platform
+     
+      floatingActionButton: Platform.isAndroid? FloatingActionButton(
         onPressed: () {
           _startAddNewTransaction(context);
         },
         child: Icon(Icons.add),
-      ),
+      ):
+      Container()
     );
   }
 }

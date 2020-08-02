@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:intl/intl.dart';
+import './transaction_item.dart';
 
 class TransactionList extends StatefulWidget {
   final Function removeItem;
@@ -64,97 +64,10 @@ class _TransactionListState extends State<TransactionList> {
                     //    ),
                     //  );
 
-                    Card(
-                  elevation: 5,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 5,
-                  ),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              width: 85,
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.elliptical(7, 7)),
-                                border: Border.all(
-                                  color: Colors.deepPurple[500],
-                                  width: 2,
-                                ),
-                              ),
-                              child: Container(
-                                height: 20,
-                                child: FittedBox(
-                                  child: Text(
-                                    '${widget._transaction[index].cost.toStringAsFixed(0)} Rs',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(widget._transaction[index].title,
-                                    style:
-                                        Theme.of(context).textTheme.headline6),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  DateFormat.yMMMd()
-                                      .format(widget._transaction[index].date),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 90,
-                        ),
-                        MediaQuery.of(context).size.width < 420
-                            ? IconButton(
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Theme.of(context).errorColor,
-                                ),
-                                onPressed: () {
-                                  print(widget._transaction[index].id);
-                                  return widget.removeItem(
-                                      widget._transaction[index].id);
-                                })
-                            : FlatButton.icon(
-                                onPressed: () {
-                                  print(widget._transaction[index].id);
-                                  return widget.removeItem(
-                                      widget._transaction[index].id);
-                                },
-                                label: Text("Delete"),
-                                textColor: Theme.of(context).errorColor,
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Theme.of(context).errorColor,
-                                ),
-                              ),
-                      ]),
-                );
+                    TransactionItem(transactionItem: widget._transaction[index],removeItem:widget.removeItem);
               },
             ),
     );
   }
 }
+
